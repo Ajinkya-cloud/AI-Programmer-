@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Pair Programmer for Students</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      font-family: 'Inter', sans-serif;
+      color: #f8f9fa;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: #111 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .hero {
+      padding: 80px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      color: white;
+    }
+
+    .typing-text {
+      display: inline-block;
+      border-right: 2px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3.5s steps(30, end), blink 0.75s step-end infinite;
+      font-size: 1.5rem;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: white }
+    }
+
+    .editor, .chat {
+      background-color: #1f1f2e;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: 0.3s ease-in-out;
+    }
+
+    .editor:hover, .chat:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+    }
+
+    textarea {
+      background: #12121c;
+      color: #eee;
+      border: 1px solid #333;
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      padding: 12px;
+      resize: none;
+      font-family: monospace;
+    }
+
+    .chat-box {
+      background: #12121c;
+      height: 200px;
+      overflow-y: auto;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .chat-box p {
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeInUp 0.5s forwards;
+    }
+
+    .chat-box p.user {
+      animation-delay: 0s;
+    }
+
+    .chat-box p.ai {
+      animation-delay: 0.2s;
+    }
+
+    .section-title {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .feature-box {
+      background-color: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 20px;
+      transition: 0.3s;
+    }
+
+    .feature-box:hover {
+      background-color: rgba(255,255,255,0.1);
+      transform: scale(1.03);
+    }
+
+    .btn-demo {
+      background: #fdbb2d;
+      color: #111;
+      font-weight: bold;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .btn-demo:hover {
+      background: #ffc107;
+      color: black;
+    }
+
+    footer {
+      background: #0e0e15;
+      padding: 20px 0;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+    }
+
+    .delay-1 { animation-delay: 0.3s; }
+    .delay-2 { animation-delay: 0.6s; }
+    .delay-3 { animation-delay: 0.9s; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <nav class="navbar navbar-dark px-4">
+    <a class="navbar-brand fw-bold fs-4" href="#">AI Pair Programmer</a>
+    <button class="btn btn-demo">Try Demo</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="display-5 fw-bold">AI Pair Programmer for Students</h1>
+    <p class="typing-text">Code smarter. Learn faster. Debug easier.</p>
+  </section>
+
+  <!-- Main Section -->
+  <div class="container my-5">
+    <div class="row g-4">
+      <div class="col-md-7">
+        <div class="editor animate-fade-in-up delay-1">
+          <h4 class="section-title">Code Editor</h4>
+          <textarea id="codeArea">// Write your code here...</textarea>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="chat animate-fade-in-up delay-2">
+          <h4 class="section-title">AI Assistant</h4>
+          <div id="chatBox" class="chat-box">
+            <p class="ai"><strong>AI:</strong> Hello! What can I help you with?</p>
+          </div>
+          <input type="text" id="chatInput" class="form-control" placeholder="Ask a question..." />
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="text-center mt-5 animate-fade-in-up delay-2">
+      <h2 class="fw-bold mb-4">Why Choose Our AI Assistant?</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature-box animate-fade-in-up delay-1">
+            <h5>⚡ Learn Faster</h5>
+            <p>Instant answers and explanations to boost your learning curve.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box animate-fade-in-up delay-2">
+            <h5>🛠 Debug Smarter</h5>
+            <p>Find and fix bugs with real-time code insights and suggestions.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box animate-fade-in-up delay-3">
+            <h5>🤖 24/7 Pair Programmer</h5>
+            <p>Never get stuck—our AI is always ready to assist you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Hackathon Team | AI Pair Programmer</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const chatInput = document.getElementById("chatInput");
+    const chatBox = document.getElementById("chatBox");
+
+    chatInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter" && chatInput.value.trim() !== "") {
+        const userMsg = chatInput.value;
+
+        const userBubble = document.createElement("p");
+        userBubble.className = "user";
+        userBubble.innerHTML = `<strong>You:</strong> ${userMsg}`;
+        chatBox.appendChild(userBubble);
+
+        const aiBubble = document.createElement("p");
+        aiBubble.className = "ai";
+        aiBubble.innerHTML = `<strong>AI:</strong> That's an interesting question! Let me guide you through it.`;
+        chatBox.appendChild(aiBubble);
+
+        // Trigger animation
+        setTimeout(() => {
+          userBubble.style.opacity = 1;
+          aiBubble.style.opacity = 1;
+        }, 50);
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+        chatInput.value = "";
+      }
+    });
+
+    // Scroll reveal animation
+    document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            el.style.animationPlayState = 'running';
+            el.classList.add('visible');
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
